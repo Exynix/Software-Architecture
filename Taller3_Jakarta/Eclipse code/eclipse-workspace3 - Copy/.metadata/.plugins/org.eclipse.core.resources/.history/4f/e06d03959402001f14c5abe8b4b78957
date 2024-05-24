@@ -1,0 +1,42 @@
+package modelo;
+
+import jakarta.ejb.Stateless;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
+import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.TypedQuery;
+
+/**
+ * Session Bean implementation class Datosusuario
+ */
+@Stateless
+public class Datosusuario implements DatosusuarioRemote {
+
+    /**
+     * Default constructor. 
+     */
+    public Datosusuario() {
+        // TODO Auto-generated constructor stub
+    }
+
+    @PersistenceContext
+    private EntityManager entityManager;
+    
+    @Override
+    public String obtenermensaje(int id) {
+        TypedQuery<String> query = entityManager.createQuery(
+            "SELECT u.nombre FROM usuario u WHERE u.id = :id", String.class);
+        query.setParameter("id", id);
+        
+        String nombre = null;
+        try {
+            nombre = query.getSingleResult();
+        } catch (NoResultException e) {
+            // Si no se encuentra ningún usuario con el ID proporcionado, retorna un mensaje indicando que no se encontró el usuario
+            nombre = "No se encontró ningún usuario con el ID proporcionado.";
+        }
+        
+        return nombre;
+    }
+
+}

@@ -1,0 +1,32 @@
+package modelo;
+
+import jakarta.ejb.Stateless;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
+import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.TypedQuery;
+
+/**
+ * Session Bean implementation class Datosusuario
+ */
+@Stateless
+public class Datosusuario implements DatosusuarioRemote {
+
+    /**
+     * Default constructor. 
+     */
+    public Datosusuario() {
+        // TODO Auto-generated constructor stub
+    }
+
+    @PersistenceContext
+    private EntityManager entityManager;
+    
+    @Override
+    public String obtenermensaje() {
+       
+        
+        return "hola mundo";
+    }
+
+}

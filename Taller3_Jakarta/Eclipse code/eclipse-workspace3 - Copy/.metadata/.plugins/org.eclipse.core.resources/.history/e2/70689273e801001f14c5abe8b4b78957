@@ -1,0 +1,24 @@
+package logica;
+
+import jakarta.ejb.Stateless;
+
+/**
+ * Session Bean implementation class Gestionusuarios
+ */
+@Stateless
+public class Gestionusuarios implements GestionusuariosRemote {
+
+    /**
+     * Default constructor. 
+     */
+    public Gestionusuarios() {
+        // TODO Auto-generated constructor stub
+    }
+
+	@Override
+	public String mostrarmensaje() {
+		// TODO Auto-generated method stub
+		return "hola mundo";
+	}
+
+}

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<head>
+    <title>Buy</title>
+</head>
+<body>
+<h:form>
+    <h:outputLabel value="Card Number:" for="cardNumber"/>
+    <h:inputSecret id="cardNumber" value="#{paymentBean.cardNumber}" required="true"/>
+    <h:outputLabel value="Cardholder Name:" for="cardHolderName"/>
+    <h:inputText id="cardHolderName" value="#{paymentBean.cardHolderName}" required="true"/>
+    <h:outputLabel value="Expiration Date:" for="expirationDate"/>
+    <h:inputText id="expirationDate" value="#{paymentBean.expirationDate}" required="true"/>
+    <h:outputLabel value="CVV:" for="cvv"/>
+    <h:inputSecret id="cvv" value="#{paymentBean.cvv}" required="true"/>
+    <h:commandButton value="Complete Purchase" action="#{paymentBean.completePurchase}"/>
+</h:form>
+</body>
+</html>

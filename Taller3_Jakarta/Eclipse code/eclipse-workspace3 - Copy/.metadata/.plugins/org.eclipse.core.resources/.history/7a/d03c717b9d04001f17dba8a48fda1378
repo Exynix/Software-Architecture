@@ -1,0 +1,58 @@
+import java.util.Properties;
+import java.util.Date;
+
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+
+import jakarta.jms.*;
+
+public class EnvioMensaje {
+
+	public static void main(String[] args) throws NamingException {
+		
+		String user = "daniel";
+		String pass = "123";
+		String CONNECTION_FACTORY="jms/RemoteConnectionFactory";
+		String DESTINATION = "jms/queue/CorreosCola";
+		
+		
+		Properties jmdiPrpiedades = new Properties();
+		jmdiPrpiedades.put(Context.INITIAL_CONTEXT_FACTORY, "org.wildfly.naming.client.WildFlyInitialContextFactory");
+		jmdiPrpiedades.put(Context.PROVIDER_URL, "http-remoting://localhost:8680");
+		jmdiPrpiedades.put(Context.SECURITY_PRINCIPAL, user);
+		jmdiPrpiedades.put(Context.SECURITY_CREDENTIALS, pass);
+		jmdiPrpiedades.put("jboss.naming.client.ejb.context", "True");
+		
+		InitialContext ctx = new InitialContext(jmdiPrpiedades);
+		
+		ConnectionFactory cf = (ConnectionFactory)ctx.lookup(CONNECTION_FACTORY);
+		Destination destination = (Destination) ctx.lookup(DESTINATION);
+		JMSContext context = cf.createContext(user,pass);
+		JMSProducer producer = context.createProducer();
+		producer.send(destination, context.createTextMessage("hola mundo"));
+		context.close();
+		
+		/*
+		Context ctx;
+		Connection connection=null;
+			ctx = new InitialContext(jmdiPrpiedades);
+			ConnectionFactory cf = (ConnectionFactory)ctx.lookup("jms/RemoteConnectionFactory");
+			connection = cf.createConnection();
+			
+			Queue queue = (Queue)ctx.lookup("jms/queue/CorreosCola");
+			
+			
+			Session sesion = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+			MessageProducer messageProducer = sesion.createProducer(queue);
+			
+			TextMessage message=sesion.createTextMessage("Compra realizada a las " + new Date());
+			
+			messageProducer.send(message);
+			
+		*/
+		
+		
+	}
+
+}

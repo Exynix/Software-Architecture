@@ -1,0 +1,40 @@
+package logica;
+
+import java.util.Properties;
+
+import jakarta.ejb.Stateless;
+import jakarta.mail.*;
+import jakarta.mail.internet.InternetAddress;
+import jakarta.mail.internet.MimeMessage;
+
+import java.util.Properties;
+
+@Stateless
+public class MailSender {
+    private final String emailFrom = "danigutierritos2817@gmail.com";
+    private final String password = "Becruelwitheveryone28";
+
+    public void sendMail(String destinatario, String asunto, String cuerpo) throws MessagingException {
+        Properties props = new Properties();
+        props.put("mail.smtp.host", "smtp.gmail.com");
+        props.put("mail.smtp.ssl.trust", "smtp.gmail.com");
+        props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.smtp.port", "587");
+        props.put("mail.smtp.user", emailFrom);
+        props.put("mail.smtp.ssl.protocols", "TLSv1.2");
+        props.put("mail.smtp.auth", "true");
+
+        Session session = Session.getInstance(props);
+        Message message = new MimeMessage(session);
+        message.setFrom(new InternetAddress(emailFrom));
+        message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(destinatario));
+        message.setSubject(asunto);
+        message.setText(cuerpo);
+        System.out.print(message);
+        Transport transport = session.getTransport("smtp");
+        transport.connect(emailFrom, password);
+        transport.sendMessage(message, message.getAllRecipients());
+        transport.close();
+    }
+
+}

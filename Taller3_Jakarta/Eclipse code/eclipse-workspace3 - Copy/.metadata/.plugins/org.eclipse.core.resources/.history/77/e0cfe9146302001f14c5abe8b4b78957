@@ -1,0 +1,47 @@
+package user;
+
+import java.io.Serializable;
+import java.lang.Integer;
+import java.lang.String;
+
+
+/**
+ * Entity implementation class for Entity: Usuarios
+ *
+ */
+@Entity
+public class usuarios implements Serializable {
+
+	private static final long serialVersionUID = 1L;   
+	@Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
+	private String nombre;
+	private String contrasena;
+
+	public usuarios() {
+		super();
+	}   
+	public Integer getId() {
+		return this.id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}   
+	public String getNombre() {
+		return this.nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}   
+	public String getContrasena() {
+		return this.contrasena;
+	}
+
+	public void setContrasena(String contrasena) {
+		this.contrasena = contrasena;
+	}
+   
+}

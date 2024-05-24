@@ -1,0 +1,45 @@
+package logica;
+
+import java.util.Hashtable;
+import java.util.List;
+
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+
+import jakarta.ejb.Stateless;
+import modelo.DatosproductoRemote;
+import modelo.DatosusuarioRemote;
+import prod.Productos;
+
+@Stateless
+public class Gestionproductos implements GestionproductosRemote {
+	
+	
+	
+	DatosproductoRemote ejem = null;
+	
+    public Gestionproductos() {
+    	
+        Hashtable<String,String>enviroment=new Hashtable<>();
+		enviroment.put(Context.INITIAL_CONTEXT_FACTORY, "org.wildfly.naming.client.WildFlyInitialContextFactory");
+		enviroment.put(Context.URL_PKG_PREFIXES, "org.jboss.ejb.client.naming");
+		enviroment.put(Context.PROVIDER_URL, "http-remoting://localhost:8480");
+		enviroment.put(Context.SECURITY_PRINCIPAL, "daniel");
+		enviroment.put(Context.SECURITY_CREDENTIALS, "123");
+     
+        try {
+            Context context = new InitialContext(enviroment);
+            ejem = (DatosproductoRemote) context.lookup("ejb:DataEAR/DatosTIER/Datosproducto!modelo.DatosproductoRemote");
+
+        } catch (NamingException e) {
+            e.printStackTrace();
+        }
+    }
+
+	@Override
+	public List<Productos> obtenerProductos() {
+		return null;
+	}
+
+}

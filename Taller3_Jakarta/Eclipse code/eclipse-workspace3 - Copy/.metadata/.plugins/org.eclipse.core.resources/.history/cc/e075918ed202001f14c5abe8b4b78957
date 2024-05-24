@@ -1,0 +1,103 @@
+import java.util.Hashtable;
+import java.util.List;
+import java.util.Scanner;
+
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+
+import logica.GestionproductosRemote;
+import logica.GestionusuariosRemote;
+import modelo.DatosproductoRemote;
+import prod.Productos;
+import logic.Usuario;
+
+public class ClienteFuerte {
+
+	public static void main(String[] args) {
+	    Usuario mensaje = null;
+	    String mensa = null;
+	    boolean sesionIniciada = false; // Variable para controlar si el cliente ha iniciado sesión
+
+	    Hashtable<String, String> enviroment = new Hashtable<>();
+	    enviroment.put(Context.INITIAL_CONTEXT_FACTORY, "org.wildfly.naming.client.WildFlyInitialContextFactory");
+	    enviroment.put(Context.URL_PKG_PREFIXES, "org.jboss.ejb.client.naming");
+	    enviroment.put(Context.PROVIDER_URL, "http-remoting://localhost:8380");
+	    InitialContext context;
+
+	    try {
+	        context = new InitialContext(enviroment);
+	        GestionusuariosRemote ejem = null;
+	        ejem = (GestionusuariosRemote) context
+	                .lookup("ejb:LogicaEAR/LogicaNegocioTIER/Gestionusuarios!logica.GestionusuariosRemote");
+	        mensa = ejem.pagar();
+	        System.out.print(mensa);
+
+	        if (ejem != null) {
+	            int opcion;
+	            Scanner scanner = new Scanner(System.in);
+
+	            // Lógica de inicio de sesión
+	            do {
+	                System.out.print("Ingrese su nombre de usuario: ");
+	                String username = scanner.nextLine();
+
+	                System.out.print("Ingrese su contraseña: ");
+	                String password = scanner.nextLine();
+
+	                Usuario usuario = ejem.validarUsuario(username, password);
+	                if (usuario != null) {
+	                    sesionIniciada = true;
+	                    break; // Salir del bucle si las credenciales son válidas
+	                } else {
+	                    System.out.println("Inicio de sesión incorrecto. Inténtelo nuevamente.");
+	                }
+	            } while (true); // Repetir el bucle hasta que las credenciales sean válidas
+
+	            // Menú del usuario solo si la sesión se ha iniciado correctamente
+	            do {
+	                System.out.println("----- Menú de Usuario -----");
+	                System.out.println("1. Agregar producto al carrito");
+	                System.out.println("2. Ver carrito");
+	                System.out.println("3. Realizar pedido");
+	                System.out.println("4. Salir");
+	                System.out.print("Seleccione una opción: ");
+	                opcion = scanner.nextInt();
+	                scanner.nextLine();
+	                
+	                GestionproductosRemote prodRemote = null;
+	                
+	                prodRemote = (GestionproductosRemote) context.lookup("ejb:LogicaEAR/LogicaNegocioTIER/Gestionproductos!logica.GestionproductosRemote");
+	                List<Productos> productos = prodRemote.obtenerProductos();
+
+	                switch (opcion) {
+	                    case 1:
+	                    	System.out.println("----- Listado de Productos -----");
+	                        for (Productos producto : productos) {
+	                            System.out.println("Nombre: " + producto.getNombre_prod());
+	                            System.out.println("Precio: " + producto.getPrecio());
+	                            System.out.println("Cantidad en Stock: " + producto.getCantidad_en_stock());
+	                            System.out.println("---------------------------------");
+	                        }	                       
+	                        
+	                        break;
+	                    case 2:
+	                        // Lógica para ver carrito
+	                        break;
+	                    case 3:
+	                        // Lógica para realizar pedido
+	                        break;
+	                    case 4:
+	                        System.out.println("Saliendo del programa...");
+	                        break;
+	                    default:
+	                        System.out.println("Opción no válida. Por favor, seleccione una opción válida.");
+	                }
+	            } while (opcion != 4);
+	        } 
+	    } catch (NamingException e) {
+	        e.printStackTrace();
+	    }
+	}
+
+}

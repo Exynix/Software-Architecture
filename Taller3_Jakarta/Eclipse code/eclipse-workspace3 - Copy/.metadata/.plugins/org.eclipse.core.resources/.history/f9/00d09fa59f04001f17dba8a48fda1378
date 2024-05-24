@@ -1,0 +1,39 @@
+import java.util.Properties;
+import java.util.Date;
+
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+
+import jakarta.jms.*;
+
+public class EnvioCola {
+    String user = "daniel";
+    String pass = "123";
+    String CONNECTION_FACTORY = "jms/RemoteConnectionFactory";
+    String DESTINATION = "jms/queue/CorreosCola";
+
+    public void enviarMensaje() {
+        try {
+            Properties jmdiPrpiedades = new Properties();
+            jmdiPrpiedades.put(Context.INITIAL_CONTEXT_FACTORY, "org.wildfly.naming.client.WildFlyInitialContextFactory");
+            jmdiPrpiedades.put(Context.PROVIDER_URL, "http-remoting://localhost:8680");
+            jmdiPrpiedades.put(Context.SECURITY_PRINCIPAL, user);
+            jmdiPrpiedades.put(Context.SECURITY_CREDENTIALS, pass);
+            jmdiPrpiedades.put("jboss.naming.client.ejb.context", "True");
+
+            InitialContext ctx = new InitialContext(jmdiPrpiedades);
+
+            ConnectionFactory cf = (ConnectionFactory) ctx.lookup(CONNECTION_FACTORY);
+            Destination destination = (Destination) ctx.lookup(DESTINATION);
+            JMSContext context = cf.createContext(user, pass);
+            JMSProducer producer = context.createProducer();
+            producer.send(destination, context.createTextMessage("hola mundo"));
+            context.close();
+        } catch (Exception e) {
+            // Manejar la excepción aquí, ya sea imprimiéndola o manejándola de otra forma
+            e.printStackTrace();
+        }
+    }
+}
+

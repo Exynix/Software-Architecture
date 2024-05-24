@@ -1,0 +1,41 @@
+package modelo;
+
+import jakarta.ejb.Stateless;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
+import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.TypedQuery;
+import logic.Usuario;
+
+/**
+ * Session Bean implementation class Datosusuario
+ */
+@Stateless
+public class Datosusuario implements DatosusuarioRemote {
+
+    
+    public Datosusuario() {
+        // TODO Auto-generated constructor stub
+    }
+
+    @PersistenceContext
+    private EntityManager entityManager;
+    
+    @Override
+    public Usuario obtenerUsuario() {
+        TypedQuery<Usuario> query = entityManager.createQuery(
+            "SELECT u FROM Usuario u", Usuario.class);
+        query.setMaxResults(1); // Limita los resultados a solo uno
+        
+        Usuario usuario = null;
+        try {
+            usuario = query.getSingleResult();
+        } catch (NoResultException e) {
+            // Manejo de excepción si no se encuentra ningún usuario en la base de datos
+            // Puedes lanzar una excepción específica o devolver null según sea necesario
+        }
+        
+        return usuario;
+    }
+
+}

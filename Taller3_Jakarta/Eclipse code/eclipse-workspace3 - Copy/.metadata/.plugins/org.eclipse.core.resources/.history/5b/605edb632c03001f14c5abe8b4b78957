@@ -1,0 +1,33 @@
+package consumer;
+
+import jakarta.ejb.ActivationConfigProperty;
+import jakarta.ejb.MessageDriven;
+import jakarta.jms.Message;
+import jakarta.jms.MessageListener;
+
+/**
+ * Message-Driven Bean implementation class for: Consumidor
+ */
+@MessageDriven(
+		activationConfig = { @ActivationConfigProperty(
+				propertyName = "destinationType", propertyValue = "jakarta.jms.Queue")
+		}, 
+		messageListenerInterface = MessageListener.class)
+public class Consumidor implements MessageListener {
+
+    /**
+     * Default constructor. 
+     */
+    public Consumidor() {
+        // TODO Auto-generated constructor stub
+    }
+	
+	/**
+     * @see MessageListener#onMessage(Message)
+     */
+    public void onMessage(Message message) {
+        // TODO Auto-generated method stub
+        
+    }
+
+}

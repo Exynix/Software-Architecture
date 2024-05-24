@@ -1,0 +1,60 @@
+import java.util.Properties;
+import java.util.Date;
+
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+
+import jakarta.jms.Connection;
+import jakarta.jms.ConnectionFactory;
+import jakarta.jms.JMSException;
+import jakarta.jms.MessageProducer;
+import jakarta.jms.Queue;
+import jakarta.jms.Session;
+import jakarta.jms.TextMessage;
+
+
+
+
+public class EnvioMensaje {
+
+	public static void main(String[] args) {
+		Properties jmdiPrpiedades = new Properties();
+		jmdiPrpiedades.put(Context.URL_PKG_PREFIXES, "org.jboss.ejb.client.naming");
+		jmdiPrpiedades.put("jboss.naming.client.ejb.context", "True");
+		jmdiPrpiedades.put(Context.INITIAL_CONTEXT_FACTORY, "org.wildfly.naming.client.WildFlyInitialContextFactory");
+		jmdiPrpiedades.put(Context.PROVIDER_URL, "http-remoting://localhost:8680");
+		jmdiPrpiedades.put(Context.SECURITY_PRINCIPAL, "daniel");
+		jmdiPrpiedades.put(Context.SECURITY_CREDENTIALS, "123");
+		Context ctx;
+		Connection connection=null;
+		try {
+			ctx = new InitialContext(jmdiPrpiedades);
+			Queue queue = (Queue)ctx.lookup("jms/queue/CorreosCola");
+			ConnectionFactory cf = (ConnectionFactory)ctx.lookup("jms/RemoteConnectionFactory");
+			connection = cf.createConnection();
+			
+			Session sesion = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+			MessageProducer messageProducer = sesion.createProducer(queue);
+			
+			TextMessage message=sesion.createTextMessage("Compra realizada a las " + new Date());
+			
+			messageProducer.send(message);
+			
+		} catch (NamingException e) {
+			e.printStackTrace();
+		} catch (JMSException e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				connection.close();
+			} catch (JMSException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+	}
+
+}

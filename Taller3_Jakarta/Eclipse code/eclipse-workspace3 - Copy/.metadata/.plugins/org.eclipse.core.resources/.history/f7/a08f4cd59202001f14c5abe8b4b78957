@@ -1,0 +1,24 @@
+package modelo;
+
+import jakarta.ejb.Stateless;
+
+/**
+ * Session Bean implementation class Datosusuario
+ */
+@Stateless
+public class Datosusuario implements DatosusuarioRemote {
+
+    /**
+     * Default constructor. 
+     */
+    public Datosusuario() {
+        // TODO Auto-generated constructor stub
+    }
+
+	@Override
+	public String obtenermensaje() {
+		// TODO Auto-generated method stub
+		return "HOLA MUNDO";
+	}
+
+}

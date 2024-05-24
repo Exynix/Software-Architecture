@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<head>
+   <title> Login Page </title>
+
+   <style type="text/css">
+      Body {
+         font-family: Calibri, Helvetica, sans-serif;
+         background-color: teal;
+      }
+      button {
+         background-color: #4CAF50;
+         width: 100%;
+         color: orange;
+         padding: 15px;
+         margin: 10px 0px;
+         border: none;
+         cursor: pointer;
+      }
+      form {
+         border: 3px solid #f1f1f1;
+      }
+      input[type=text], input[type=password] {
+         width: 100%;
+         margin: 8px 0;
+         padding: 12px 20px;
+         display: inline-block;
+         border: 2px solid green;
+         box-sizing: border-box;
+      }
+      button:hover {
+         opacity: 0.7;
+      }
+      .cancelbtn {
+         width: auto;
+         padding: 10px 18px;
+         margin: 10px 5px;
+      }
+
+
+      .container {
+         padding: 25px;
+         background-color: lightblue;
+      }
+   </style>
+</head>
+
+<body>
+
+<center> <h1> "#{loginBean.username}"</h1> </center>
+
+<h:form>
+   <h:outputLabel value="Username:" for="username"/>
+   <h:inputText id="username" value="#{loginBean.username}" required="true" />
+   <h:outputLabel value="Password:" for="password"/>
+   <h:inputSecret id="password" value="#{loginBean.password}" required="true"/>
+   <h:commandButton value="Login" action="#{loginBean.login}"/>
+</h:form>
+</body>
+
+</html>

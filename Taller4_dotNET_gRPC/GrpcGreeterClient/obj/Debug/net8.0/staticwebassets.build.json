@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "yBidkAxXQie+/hti8gphSiciZJpX43ceEQgBKbB1VsI=",
+  "Source": "GrpcGreeterClient",
+  "BasePath": "_content/GrpcGreeterClient",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
