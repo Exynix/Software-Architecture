@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<publish-info>
-  <server id="WildFly 27+ BD" path="publish1.dat"/>
-  <server id="WildFly 27+ logica" path="publish0.dat"/>
-  <server id="WildFly 27+ COLA" path="publish2.dat"/>
-</publish-info>

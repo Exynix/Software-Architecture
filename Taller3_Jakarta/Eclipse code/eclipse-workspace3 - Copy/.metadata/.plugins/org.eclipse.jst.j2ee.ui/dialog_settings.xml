@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<section name="Workbench">
-	<item key="LASTEARNAME_" value="MessageEAR"/>
-	<list key="MRU_RUNTIME_STORE">
-		<item value="WildFly 27.0 Runtime COLAS"/>
-		<item value="WildFly 27.0 Runtime BDEAR"/>
-		<item value="WildFly 31.0 Runtime LogicaEAR"/>
-	</list>
-</section>
