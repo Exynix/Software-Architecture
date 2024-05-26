@@ -3,13 +3,13 @@ import "primereact/resources/themes/saga-blue/theme.css"; // import theme
 import "primereact/resources/primereact.min.css"; // import prime components css
 import "primeicons/primeicons.css"; // import icons
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom"
 
 import { InputText } from 'primereact/inputtext';
 import { Checkbox } from 'primereact/checkbox';
 import { Button } from 'primereact/button';
 
-function LoginPage() {
+function SignupPage() {
      const [checked, setChecked] = useState(false); // State for Checkbox
 
    return (
@@ -19,9 +19,9 @@ function LoginPage() {
                <div className="surface-card p-4 shadow-2 border-round w-full lg:w-6">
                    <div className="text-center mb-5">
                        <img src="/demo/images/blocks/logos/hyper.svg" alt="hyper" height={50} className="mb-3"/>
-                       <div className="text-900 text-3xl font-medium mb-3">Welcome Back</div>
-                       <span className="text-600 font-medium line-height-3">Don't have an account?</span>
-                       <Link to={"/signup"} className="font-medium no-underline ml-2 text-blue-500 cursor-pointer">Create today!</Link>
+                       <div className="text-900 text-3xl font-medium mb-3">Create your account!</div>
+                       <span className="text-600 font-medium line-height-3">Already have an account?</span>
+                       <Link to={"/login"} className="font-medium no-underline ml-2 text-blue-500 cursor-pointer">Log in!</Link>
                    </div>
 
                    <div>
@@ -34,8 +34,6 @@ function LoginPage() {
                                          className="mr-2"/>
                                <label htmlFor="rememberme">Remember me</label>
                            </div>
-                           <a className="font-medium no-underline ml-2 text-blue-500 text-right cursor-pointer">Forgot
-                               your username?</a>
                        </div>
 
                        <Button label="Sign In" icon="pi pi-user" className="w-full"/>
@@ -47,6 +45,6 @@ function LoginPage() {
    );
 }
 
-export default LoginPage
+export default SignupPage
 
 
